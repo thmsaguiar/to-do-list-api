@@ -1,5 +1,12 @@
 # To-Do List API — Node.js + TypeScript
 
+![GitHub repo size](https://img.shields.io/github/repo-size/thmsaguiar/to-do-list-api)
+![GitHub last commit](https://img.shields.io/github/last-commit/thmsaguiar/to-do-list-api)
+![npm](https://img.shields.io/npm/v/npm)
+![GitHub top language](https://img.shields.io/github/languages/top/thmsaguiar/to-do-list-api)
+
+---
+
 ## <a name="description">Descrição</a>
 
 API RESTful desenvolvida com foco em boas práticas de arquitetura backend, segurança, padronização de erros, testabilidade e escalabilidade.
