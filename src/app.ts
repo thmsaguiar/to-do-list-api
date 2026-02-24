@@ -14,6 +14,26 @@ app.disable('x-powered-by');
 // Middlewares de parsing
 app.use(express.json());
 
+// Swagger
+const swaggerSpec = swaggerJsdoc({
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "To-Do List API",
+      version: "1.0.0",
+      description: "API simples de lista de tarefas com Node.js + Express",
+    },
+    servers: [
+      {
+        url: "http://localhost:3000",
+      },
+    ],
+  },
+  apis: ["./src/routes/*.ts"], // busca comentários nas rotas
+});
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 // Segurança
 app.use(helmet());
 app.use(cors({
@@ -36,24 +56,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// Swagger
-const swaggerSpec = swaggerJsdoc({
-  definition: {
-    openapi: "3.0.0",
-    info: {
-      title: "To-Do List API",
-      version: "1.0.0",
-      description: "API simples de lista de tarefas com Node.js + Express",
-    },
-    servers: [
-      {
-        url: "http://localhost:3000",
-      },
-    ],
-  },
-  apis: ["./src/routes/*.ts"], // busca comentários nas rotas
-});
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 
 // Rotas
 app.get("/", (req, res) => {
