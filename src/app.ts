@@ -9,6 +9,14 @@ import cors from "cors";
 
 const app = express();
 
+const API_URL = process.env.RENDER_EXTERNAL_URL || "http://localhost:3000";
+
+const ALLOWED_ORIGINS = [
+  "http://localhost:3000",
+  "http://localhost:5173",
+  process.env.RENDER_EXTERNAL_URL
+].filter(Boolean) as string[];
+
 app.disable('x-powered-by');
 
 // Middlewares de parsing
@@ -25,7 +33,7 @@ const swaggerSpec = swaggerJsdoc({
     },
     servers: [
       {
-        url: "http://localhost:3000",
+        url: API_URL,
       },
     ],
   },
@@ -37,7 +45,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 // Segurança
 app.use(helmet());
 app.use(cors({
-  origin: ["http://localhost:3000"],
+  origin: ALLOWED_ORIGINS,
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
 }));
@@ -63,7 +71,7 @@ app.get("/", (req, res) => {
   res.json({
     message: "🚀 Bem-vindo à API To-Do List",
     version: "1.0.0",
-    docs: "http://localhost:3000/api-docs",
+    docs: `${API_URL}/api-docs`,
   });
 });
 app.get("/health", (req, res) => {
